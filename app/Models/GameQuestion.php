@@ -9,6 +9,8 @@ class GameQuestion extends Model
 {
     use HasFactory;
 
+    public $incrementing = false;
+
     protected $fillable = [
         'point',
         'question_id',

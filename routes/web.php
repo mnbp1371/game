@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Player as Player;
 use App\Http\Controllers\Admin as Admin;
+use App\Http\Controllers\Player as Player;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -67,4 +67,6 @@ Route::group([
 
     Route::get('logout', [Admin\AuthController::class, 'logout'])
         ->name('logout');
+
+    Route::resource('questions', Admin\QuestionController::class);
 });
