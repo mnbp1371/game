@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Player as Player;
+use App\Http\Controllers\Admin as Admin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,5 +45,26 @@ Route::group([
         ->name('dashboard');
 
     Route::get('logout', [Player\AuthController::class, 'logout'])
+        ->name('logout');
+});
+
+Route::group([
+    'middleware' => 'admin',
+    'as' => 'admin.',
+    'prefix' => 'admin',
+], function () {
+    Route::get('login', [Admin\AuthController::class, 'loginForm'])
+        ->withoutMiddleware('admin')
+        ->name('login-form');
+
+    Route::post('login', [Admin\AuthController::class, 'login'])
+        ->withoutMiddleware('admin')
+        ->name('login');
+
+
+    Route::get('dashboard', [Admin\AuthController::class, 'dashboard'])
+        ->name('dashboard');
+
+    Route::get('logout', [Admin\AuthController::class, 'logout'])
         ->name('logout');
 });

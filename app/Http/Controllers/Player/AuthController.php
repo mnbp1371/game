@@ -6,10 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Pleyer\LoginRequest;
 use App\Http\Requests\Pleyer\RegisterRequest;
 use App\Models\Player;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
