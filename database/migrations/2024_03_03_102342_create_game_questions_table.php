@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('game_questions', function (Blueprint $table) {
             $table->bigInteger('point')->nullable();
-            $table->foreignId('question_id')->constrained();
-            $table->foreignId('game_id')->constrained();
-            $table->timestamps();
+            $table->foreignId('question_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('game_id')->constrained()->cascadeOnDelete();
+            $table->timestamps(6);
         });
     }
 

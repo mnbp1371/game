@@ -14,12 +14,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
 Route::group([
     'middleware' => 'player',
     'as' => 'player.',
@@ -27,6 +21,7 @@ Route::group([
 ], function () {
     Route::get('login', [Player\AuthController::class, 'loginForm'])
         ->withoutMiddleware('player')
+        ->middleware('guest:player')
         ->name('login-form');
 
     Route::post('login', [Player\AuthController::class, 'login'])
@@ -35,6 +30,7 @@ Route::group([
 
     Route::get('register', [Player\AuthController::class, 'registerForm'])
         ->withoutMiddleware('player')
+        ->middleware('guest:player')
         ->name('register-form');
 
     Route::post('register', [Player\AuthController::class, 'register'])
@@ -61,10 +57,12 @@ Route::group([
 ], function () {
     Route::get('login', [Admin\AuthController::class, 'loginForm'])
         ->withoutMiddleware('admin')
+        ->middleware('guest:admin')
         ->name('login-form');
 
     Route::post('login', [Admin\AuthController::class, 'login'])
         ->withoutMiddleware('admin')
+        ->middleware('guest:admin')
         ->name('login');
 
 

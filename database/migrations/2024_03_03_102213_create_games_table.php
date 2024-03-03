@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('status', 50);
-            $table->foreignId('player_id')->constrained();
-            $table->timestamps();
+            $table->foreignId('player_id')->constrained()->cascadeOnDelete();
+            $table->timestamps(6);
         });
     }
 

@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => 'player',
+        'passwords' => 'player',
     ],
 
     /*
@@ -36,10 +36,6 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
         'player' => [
             'driver' => 'session',
             'provider' => 'player',
@@ -68,10 +64,6 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
         'player' => [
             'driver' => 'eloquent',
             'model' => App\Models\Player::class,

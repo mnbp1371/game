@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->bigInteger('point');
-            $table->timestamps();
+            $table->timestamps(6);
         });
     }
 
