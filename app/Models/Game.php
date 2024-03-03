@@ -27,6 +27,6 @@ class Game extends Model
 
     public function getPointAttribute()
     {
-        return $this->questions()->sum('questions.point');
+        return $this->questions()->sum('game_questions.point');
     }
 }

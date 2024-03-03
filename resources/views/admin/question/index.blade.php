@@ -1,4 +1,5 @@
-
+<a href="{{route('admin.questions.create')}}">Create Question</a>
+<hr>
 @foreach($questions as $question)
     id: {{$question->id}}
     <br>
@@ -15,6 +16,5 @@
     </a>
     <hr>
 @endforeach
-
 
 {{$questions->links()}}

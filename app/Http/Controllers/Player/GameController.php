@@ -19,7 +19,7 @@ class GameController extends Controller
                 ->exists()
         ) {
 
-            return redirect()->back();
+            return redirect()->back()->with('error', 'you have a IN_PROGRESS game');
         }
 
         $questions = Question::query()->select('id')->inRandomOrder()->take(5)->get()->pluck('id');

@@ -43,11 +43,9 @@ Route::group([
     Route::get('logout', [Player\AuthController::class, 'logout'])
         ->name('logout');
 
-    Route::resource('games', Player\GameController::class)
-        ->only('show', 'store');
-
-    Route::get('games/{id}/play', [Player\PlayController::class, 'play'])->name('games.play');
-    Route::post('games/{id}/play', [Player\PlayController::class, 'playPost'])->name('games.play.post');
+    Route::resource('games', Player\GameController::class)->only('show', 'store');
+    Route::get('games/{game}/play', [Player\PlayController::class, 'play'])->name('games.play');
+    Route::post('games/{game}/play', [Player\PlayController::class, 'answer'])->name('games.answer');
 });
 
 Route::group([
