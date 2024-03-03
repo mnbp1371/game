@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Player;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Pleyer\LoginRequest;
 use App\Http\Requests\Pleyer\RegisterRequest;
+use App\Models\Game;
 use App\Models\Player;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,7 +41,10 @@ class AuthController extends Controller
 
     public function dashboard()
     {
-        return view('player.dashboard');
+        return view('player.dashboard')
+            ->with([
+                'games' => Game::query()->paginate(),
+            ]);
     }
 
     public function logout()

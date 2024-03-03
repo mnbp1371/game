@@ -27,6 +27,6 @@ class Player extends Authenticatable
 
     public function games(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Game::class, 'game_id');
+        return $this->hasMany(Game::class, 'player_id');
     }
 }

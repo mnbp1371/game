@@ -24,4 +24,9 @@ class Game extends Model
     {
         return $this->belongsToMany(Question::class, 'game_questions', 'game_id', 'question_id');
     }
+
+    public function getPointAttribute()
+    {
+        return $this->questions()->sum('questions.point');
+    }
 }

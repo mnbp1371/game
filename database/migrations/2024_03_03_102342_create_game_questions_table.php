@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('game_questions', function (Blueprint $table) {
-            $table->bigInteger('point');
+            $table->bigInteger('point')->nullable();
             $table->foreignId('question_id')->constrained();
             $table->foreignId('game_id')->constrained();
             $table->timestamps();
