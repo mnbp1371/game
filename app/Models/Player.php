@@ -24,4 +24,9 @@ class Player extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
+
+    public function games(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Game::class, 'game_id');
+    }
 }

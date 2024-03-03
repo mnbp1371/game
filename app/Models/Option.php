@@ -14,4 +14,9 @@ class Option extends Model
         'question_id',
         'is_correct',
     ];
+
+    public function question(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Question::class, 'question_id');
+    }
 }
