@@ -7,60 +7,57 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## About Project
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The game is like "Who Wants to Be a Millionaire?"
+• During each game, the player is asked 5 questions randomly selected from the base and
+not repeated during one game. For each question there are possible answer options (n
+number) with multiple correct options. When the player chooses one of the answer
+options, the system informs about the problem being right or wrong.
+• Each question has its corresponding point. (for example, according to its complexity). If
+the answer is correct, the point for the given question is added to the points calculated for
+the given game, and each question can have 5-20 points. In case of multiple correct
+answers these points will be divided among number of correct answers. In case of an
+incorrect answer, thepoints are not added and the player is notified about the correct
+answer.
+• At the end of the game, the player is shown the number of points he has collected. This is
+the main problem where you need to manually add data to the Database; the content of the
+questions, of course, is not essential.
+• After completing this part, send it to us and continue working on the rest. Add Login
+Admin who can add / delete / modify questions, options for answering those questions and
+the right option, as well as the point for each question. Create a sign-in and log-in
+possibility (Name, Surname, Password). Playing is possible only after logging in. The best
+result is calculated for each user and the top ten is displayed on the screen (names and the
+highest score) based on the users’ best results.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Deploy
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1- composer install
 
-## Learning Laravel
+2- cp .env.example .env
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+3- vi .env
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+4- run `php artisan migrate:fresh` command
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+5- run `php artisan db:seed` command
 
-## Laravel Sponsors
+6- run `php artisan key:generate` command 
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+7- run `php artisan serve` command
 
-### Premium Partners
+## Admin
+after deploy project, you can login with flowing information:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+url: `{base_url}/admin/login`
 
-## Contributing
+email: `admin@amin.org`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+password: `12345678`
 
-## Code of Conduct
+## Admin
+after deploy project, you can register/login as player:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+register_url: `{base_url}/player/register`
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+login_url: `{base_url}/player/login`
