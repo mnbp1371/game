@@ -76,14 +76,26 @@
                                                                          /
                                                                         <a class="active" href="{{route('admin.questions.edit', ['question' => $question->id])}}">
                                                                             {{__('edit')}}
+                                                                        </a>
+                                                                        /
+                                                                        <a class="active"
+                                                                           href="javascript:document.getElementById('delete_question').submit();"
+                                                                           href="{{route('admin.questions.destroy', ['question' => $question->id])}}">
+                                                                            {{__('delete')}}
                                                                         </a>                                                                    </h6>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                     </tr>
+                                                    <form action="{{ route('admin.questions.destroy', ['question' => $question->id]) }}" method="post" id="delete_question">
+                                                        @csrf
+                                                        @method('delete')
+
+                                                    </form>
                                                 @endforeach
                                                 </tbody>
                                             </table>
+                                            {{ $questions->links() }}
                                         </div>
                                     </div>
                                 </div>

@@ -18,12 +18,16 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request): RedirectResponse
     {
-        auth('admin')->attempt([
+        $user = auth('admin')->attempt([
             'email' => $request->get('email'),
             'password' => $request->get('password'),
         ], true);
 
-        return redirect()->route('admin.auth.dashboard');
+        if (empty($user)) {
+            return redirect()->back()->with('error', 'something is wrong');
+        }
+
+        return redirect()->route('admin.dashboard');
     }
 
     public function dashboard(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
@@ -35,6 +39,6 @@ class AuthController extends Controller
     {
         auth('admin')->logout();
 
-        return redirect()->route('admin.auth.form');
+        return redirect()->route('admin.login-form');
     }
 }

@@ -72,4 +72,11 @@ class QuestionController extends Controller
             'question' => $question->id,
         ]);
     }
+
+    public function destroy(string $id): RedirectResponse
+    {
+        $this->questionRepository->delete($id);
+
+        return redirect()->back();
+    }
 }

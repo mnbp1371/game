@@ -24,7 +24,7 @@ class AuthController extends Controller
         $player = Player::create($request->toArray());
         auth('player')->login($player);
 
-        return redirect()->route('player.auth.dashboard');
+        return redirect()->route('player.dashboard');
     }
 
     public function loginForm(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
@@ -34,12 +34,16 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request): RedirectResponse
     {
-        auth('player')->attempt([
+        $user = auth('player')->attempt([
             'email' => $request->get('email'),
             'password' => $request->get('password'),
         ], true);
 
-        return redirect()->route('player.auth.dashboard');
+        if (empty($user)) {
+            return redirect()->back()->with('error', 'something is wrong');
+        }
+
+        return redirect()->route('player.dashboard');
     }
 
     public function dashboard(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
@@ -54,6 +58,6 @@ class AuthController extends Controller
     {
         auth('player')->logout();
 
-        return redirect()->route('player.auth.login-form');
+        return redirect()->route('player.login-form');
     }
 }

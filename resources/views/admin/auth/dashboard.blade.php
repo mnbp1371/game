@@ -71,7 +71,7 @@
 
 <div class="page">
     <div class="page-main">
-        @include('header', ['user' => auth('admin')->user()])
+        @include('header', ['user' => auth('admin')->user(), 'logoutUrl' => route('admin.logout')])
         @include('admin.auth.sidebar')
         <div class="main-content app-content mt-0">
             <div class="side-app">

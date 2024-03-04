@@ -33,4 +33,11 @@ class OptionController extends Controller
             'question' => $option->question_id,
         ]);
     }
+
+    public function destroy(string $id): RedirectResponse
+    {
+        $this->optionRepository->delete($id);
+
+        return redirect()->back();
+    }
 }

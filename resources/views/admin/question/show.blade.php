@@ -122,10 +122,22 @@
 
                     <div class="row mb-4">
                         <label class="col-md-3 form-label"></label>
-                        <div class="col-md-1">
+                        <div class="col-md-6">
                             <input class="btn btn-primary" type="submit"/>
                         </div>
+                        <div class="col-md-3">
+                            <a class="btn btn-primary"
+                               href="javascript:document.getElementById('delete_option').submit();"
+                               href="{{route('admin.questions.destroy', ['question' => $question->id])}}">
+                                {{__('delete')}}
+                            </a>
+                        </div>
                     </div>
+                </form>
+
+                <form action="{{ route('admin.options.destroy', ['option' => $option->id]) }}" method="post" id="delete_option">
+                    @csrf
+                    @method('delete')
                 </form>
                 <hr>
             @endforeach

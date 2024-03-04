@@ -74,5 +74,5 @@ Route::group([
 
     Route::resource('questions', Admin\QuestionController::class);
     Route::resource('options', Admin\OptionController::class)
-        ->only('delete', 'update', 'store');
+        ->only('destroy', 'update', 'store');
 });
