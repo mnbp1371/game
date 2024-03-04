@@ -1,4 +1,4 @@
-@extends('admin.dashboard')
+@extends('admin.auth.dashboard')
 
 @section('content')
     <div class="card">
