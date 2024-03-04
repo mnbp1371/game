@@ -28,7 +28,7 @@ class StoreOptionRequest extends FormRequest
         ];
     }
 
-    protected function passedValidation()
+    protected function passedValidation(): void
     {
         $this->replace([
             'is_correct' => $this->has('is_correct'),

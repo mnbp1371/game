@@ -63,12 +63,14 @@ Route::group([
         ->middleware('guest:admin')
         ->name('login');
 
-
     Route::get('dashboard', [Admin\AuthController::class, 'dashboard'])
         ->name('dashboard');
 
     Route::get('logout', [Admin\AuthController::class, 'logout'])
         ->name('logout');
+
+    Route::get('analytics', Admin\AnalyticsController::class)
+        ->name('analytics');
 
     Route::resource('questions', Admin\QuestionController::class);
     Route::resource('options', Admin\OptionController::class)

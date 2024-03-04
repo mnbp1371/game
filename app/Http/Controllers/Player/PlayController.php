@@ -2,39 +2,45 @@
 
 namespace App\Http\Controllers\Player;
 
+use App\Contracts\Repository\GameQuestionRepository;
+use App\Contracts\Repository\GameRepository;
+use App\Contracts\Repository\OptionRepository;
+use App\Contracts\Repository\QuestionRepository;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Player\AskRequest;
-use App\Models\Game;
-use App\Models\GameQuestion;
-use App\Models\Option;
-use App\Models\Question;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\RedirectResponse;
 
 class PlayController extends Controller
 {
+    public function __construct(
+        private readonly GameRepository $gameRepository,
+        private readonly QuestionRepository $questionRepository,
+        private readonly GameQuestionRepository $gameQuestionRepository,
+        private readonly OptionRepository $optionRepository,
+    )
+    {
+    }
+
     public function play(string $gameId)
     {
-        $game = Game::query()->findOrFail($gameId);
+        $game = $this->gameRepository->find($gameId);
         if ($game->status !== 'IN_PROGRESS') {
             return redirect()->route('player.dashboard')->with('error', "game status is {$game->status}");
         }
 
-        $question = Question::with(['options'])
-            ->whereDoesntHave('games', function ($query) use ($gameId) {
-                $query
-                    ->where('player_id', auth('player')->user()->id)
-                    ->where('game_id', $gameId)
-                    ->whereNotNull('game_questions.point');
-            })->first();
-
+        $question = $this->questionRepository->getNextQuestionsInGame(
+            gameId: $gameId,
+            playerId: auth('player')->user()->id,
+            with: ['options'],
+        );
 
         if (empty($question)) {
-            Game::query()
-                ->where('id', $gameId)
-                ->update([
+            $this->gameRepository->update(
+                data: [
                     'status' => 'COMPLETED',
-                ]);
+                ],
+                id: $gameId,
+            );
 
             return redirect()->route('player.dashboard');
         }
@@ -45,39 +51,38 @@ class PlayController extends Controller
         ]);
     }
 
-    public function answer(string $gameId, AskRequest $request): \Illuminate\Http\RedirectResponse
+    public function answer(string $gameId, AskRequest $request): RedirectResponse
     {
         $messageType = 'error';
         $message = 'Your answer is wrong';
 
         $questionId = $request->get('question_id');
 
-        $correctCount = Option::query()
-            ->where('question_id', $questionId)
-            ->where('is_correct', true)
-            ->count();
+        $correctCount = $this->optionRepository->correctCount(
+            questionId: $questionId,
+        );
 
-        $isCorrect = Option::query()
-            ->where('question_id', $questionId)
-            ->where('id', $request->input('option_id'))
-            ->where('is_correct', true)
-            ->exists();
+        $isCorrect = $this->optionRepository->isCorrect(
+            questionId: $questionId,
+            optionId: $request->input('option_id')
+        );
 
         $point = 0;
         if (!empty($isCorrect)) {
             $messageType = 'success';
             $message = 'Your answer is correct';
 
-            $point = Question::query()->findOrFail($questionId)->point;
+            $point = $this->questionRepository->find($questionId)->point;
             $point = $point / $correctCount;
         }
 
-        GameQuestion::query()
-            ->where('question_id', $questionId)
-            ->where('game_id', $gameId)
-            ->update([
+        $this->gameQuestionRepository->update(
+            questionId: $questionId,
+            gameId: $gameId,
+            data: [
                 'point' => $point,
-            ]);
+            ]
+        );
 
         return redirect()->route('player.games.play', [
             'game' => $gameId,

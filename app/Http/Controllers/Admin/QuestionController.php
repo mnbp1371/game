@@ -2,35 +2,48 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Contracts\Repository\QuestionRepository;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreQuestionRequest;
 use App\Http\Requests\Admin\UpdateQuestionRequest;
-use App\Models\Question;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 
 class QuestionController extends Controller
 {
-    public function index()
+    public function __construct(
+        private readonly QuestionRepository $questionRepository
+    )
+    {
+    }
+
+    public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('admin.question.index')->with([
-            'questions' => Question::query()->paginate()
+            'questions' => $this->questionRepository->all()
         ]);
     }
 
-    public function show(string $id)
+    public function show(string $id): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('admin.question.show')->with([
-            'question' => Question::query()->with(['options'])->findOrFail($id)
+            'question' => $this->questionRepository->find(
+                id: $id,
+                with: ['options']
+            )
         ]);
     }
 
-    public function create()
+    public function create(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('admin.question.create');
     }
 
-    public function store(StoreQuestionRequest $request)
+    public function store(StoreQuestionRequest $request): RedirectResponse
     {
-        $question = Question::query()->create($request->validated());
+        $question = $this->questionRepository->create($request->validated());
 
         return redirect()->route('admin.questions.show', [
             'question' => $question->id,
@@ -38,20 +51,22 @@ class QuestionController extends Controller
     }
 
 
-    public function edit(string $id)
+    public function edit(string $id): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('admin.question.edit')->with([
-            'question' => Question::query()->with(['options'])->findOrFail($id)
+            'question' => $this->questionRepository->find(
+                id: $id,
+                with: ['options']
+            )
         ]);
     }
 
-    public function update(string $id, UpdateQuestionRequest $request)
+    public function update(string $id, UpdateQuestionRequest $request): RedirectResponse
     {
-        $question = Question::query()
-            ->findOrFail($id);
-
-        $question->update($request->validated());
-        $question->refresh();
+        $question = $this->questionRepository->update(
+            data: $request->validated(),
+            id: $id
+        );
 
         return redirect()->route('admin.questions.show', [
             'question' => $question->id,

@@ -38,6 +38,12 @@
                             {{__('create_questions')}}
                         </span>
                     </a>
+                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{route('admin.analytics')}}">
+                        <i class="side-menu__icon fe fe-home"></i>
+                        <span class="side-menu__label">
+                            {{__('analytics')}}
+                        </span>
+                    </a>
                 </li>
             </ul>
             <div class="slide-right" id="slide-right">

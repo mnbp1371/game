@@ -4,7 +4,6 @@ namespace App\Repositories\Db;
 
 use App\Contracts\Repository\Repository;
 use App\Exceptions\Repository\Invalid;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
