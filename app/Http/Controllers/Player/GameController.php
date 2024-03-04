@@ -4,14 +4,13 @@ namespace App\Http\Controllers\Player;
 
 use App\Contracts\Repository\GameRepository;
 use App\Contracts\Repository\QuestionRepository;
+use App\Enums\GameStatus;
 use App\Http\Controllers\Controller;
-use App\Models\Game;
-use App\Models\Question;
 
 class GameController extends Controller
 {
     public function __construct(
-        private readonly GameRepository     $gameRepository,
+        private readonly GameRepository $gameRepository,
         private readonly QuestionRepository $questionRepository,
     )
     {
@@ -32,7 +31,7 @@ class GameController extends Controller
         $game = $this->gameRepository->create([
             'title' => 'game',
             'player_id' => $player->id,
-            'status' => 'IN_PROGRESS',
+            'status' => GameStatus::IN_PROGRESS,
         ]);
 
         $this->gameRepository->addQuestions(

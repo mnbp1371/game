@@ -6,6 +6,7 @@ use App\Contracts\Repository\GameQuestionRepository;
 use App\Contracts\Repository\GameRepository;
 use App\Contracts\Repository\OptionRepository;
 use App\Contracts\Repository\QuestionRepository;
+use App\Enums\GameStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Player\AskRequest;
 use Illuminate\Http\RedirectResponse;
@@ -37,7 +38,7 @@ class PlayController extends Controller
         if (empty($question)) {
             $this->gameRepository->update(
                 data: [
-                    'status' => 'COMPLETED',
+                    'status' => GameStatus::COMPLETED,
                 ],
                 id: $gameId,
             );
